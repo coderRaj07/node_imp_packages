@@ -1,5 +1,7 @@
 const Joi = require('joi');
 
+//*******Simple Use*******//
+
 // Define a schema for a complex object
 const complexObjectSchema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
@@ -30,18 +32,39 @@ const userData = {
   role: 'user',
 };
 
-// Validate the data against the schema
 const { error, value } = complexObjectSchema.validate(userData, { abortEarly: false });
-
 if (error) {
   console.error("Validation Errors:");
   error.details.forEach((detail, index) => {
-    console.error(`Error ${index + 1}: ${detail.message}`);
-  });
+  console.error(`Error ${index + 1}: ${detail.message}`);
+    });
 } else {
-  console.log('Data is valid:', value);
+    console.log('Data is valid:', value);
 }
 
+
+
+//*******In Validating Post Requests*******//
+
+const express = require('express');
+const app = express();
+const port = 3000;
+app.use(express.json());
+
+app.post('/register', (req, res) => {
+  // Validate the data against the schema
+  const { error, value } = complexObjectSchema.validate(req.body, { abortEarly: false });
+    if (error) {
+    // If validation fails, return an error response
+    res.status(400).json({ error: error.details[0].message });
+  } else {
+    // If validation passes, process the data
+    // value contains the validated request data
+    // You can access it as value.username, value.email, etc.
+    // ... your processing logic ...
+    res.json({ message: 'Registration successful' });
+  }
+}
 
 
 /*
@@ -68,3 +91,8 @@ To stop at the first error we can remove abortEarly:
 If there are validation errors, we iterate through them and print each error message. Otherwise, we print that the data is valid along with the validated value.
 
 */
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
