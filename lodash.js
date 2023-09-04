@@ -33,3 +33,8 @@ Output:
   }
 }
 */
+
+/*
+In this code, we've destructured the get and set functions from the lodash library and then used them as standalone functions. 
+This approach allows you to use get and set without the need for the _ prefix. 
+*/
