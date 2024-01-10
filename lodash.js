@@ -1,4 +1,4 @@
-const { get, set } = require('lodash');
+const { get, set, cloneDeep } = require('lodash');
 
 // Example 1: Using get to access nested properties
 const user = {
@@ -38,3 +38,11 @@ Output:
 In this code, we've destructured the get and set functions from the lodash library and then used them as standalone functions. 
 This approach allows you to use get and set without the need for the _ prefix. 
 */
+
+
+// Example 4: For deep copy -----------------------Imp use case
+const originalObject = { a: 1, b: 2, c: { d: 3 } };
+const deepCopy = cloneDeep(originalObject);
+
+console.log(deepCopy);
+// Output: { a: 1, b: 2, c: { d: 3 } }
